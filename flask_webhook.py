@@ -1,5 +1,5 @@
 from flask import Flask, request
-from apps import process_chatbot_message  # Import function from main.py
+from main import process_chatbot_message  # Import function from main.py
 
 app = Flask(__name__)
 
