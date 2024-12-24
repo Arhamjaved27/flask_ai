@@ -6,7 +6,7 @@ st.markdown(Text_msg)
 # st.markdown("this is the tesing message")
 
 def process_chatbot_message(msg):
-    # st.markdown(f'{msg}')
+    st.markdown(f'{msg}')
     print("Testing")
 
 

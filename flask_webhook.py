@@ -13,10 +13,11 @@ def whatsapp_webhook():
     incoming_message = request.form.get('Body')
     sender = request.form.get('From')
 
-    process_chatbot_message(incoming_message)
+    Message = "This is message" + incoming_message
+    process_chatbot_message(Message)
     # response = process_chatbot_message(incoming_message)  # Call your chatbot logic
     # return f"<Response><Message>{response}</Message></Response>"
-    return f"<Response><Message>{incoming_message +"hello"}</Message></Response>"
+    # return f"<Response><Message>{incoming_message +"hello"}</Message></Response>"
 
 if __name__ == '__main__':
     app.run(port=5000)
