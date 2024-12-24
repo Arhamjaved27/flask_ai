@@ -14,7 +14,6 @@ def whatsapp_webhook():
     sender = request.form.get('From')
 
     Message = "This is "
-    # Message = "This is "
     process_chatbot_message(Message)
     # response = process_chatbot_message(incoming_message)  # Call your chatbot logic
     # return f"<Response><Message>{response}</Message></Response>"
