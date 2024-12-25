@@ -19,5 +19,11 @@ def whatsapp_webhook():
     # return f"<Response><Message>{response}</Message></Response>"
     return f"<Response><Message>{incoming_message +"hello"}</Message></Response>"
 
+@app.route('/api/messages', methods=['GET'])
+def get_messages():
+    """Endpoint to fetch all received messages."""
+    return jsonify(messages)
+
+
 if __name__ == '__main__':
     app.run(port=5000)

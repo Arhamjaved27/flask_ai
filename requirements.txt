@@ -1,6 +1,4 @@
-gunicorn
 Flask==3.1.0
 gunicorn
 twilio==9.4.1
-streamlit
 
