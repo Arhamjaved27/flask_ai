@@ -29,7 +29,7 @@ def get_messages():
     """Endpoint to fetch all received messages."""
     global new_message_flag
     new_message_flag = False  # Reset the flag
-    return jsonify(messages)
+    return jsonify(messages[-1])
 
 @app.route('/api/has_new_messages', methods=['GET'])
 def has_new_messages():
