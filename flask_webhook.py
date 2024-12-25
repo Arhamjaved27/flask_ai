@@ -1,6 +1,4 @@
 from flask import Flask, request
-from main import process_chatbot_message  # Import function from main.py
-
 app = Flask(__name__)
 
 # @app.route('/')
@@ -8,16 +6,24 @@ app = Flask(__name__)
 #     return 'Hello World'
 
 
-@app.route('/whatsapp', methods=['POST'])
-def whatsapp_webhook():
-    incoming_message = request.form.get('Body')
-    sender = request.form.get('From')
+# In-memory storage for messages
+messages = []
 
-    Message = "This is "
-    process_chatbot_message(Message)
-    # response = process_chatbot_message(incoming_message)  # Call your chatbot logic
-    # return f"<Response><Message>{response}</Message></Response>"
-    return f"<Response><Message>{incoming_message +"hello"}</Message></Response>"
+@app.route('/whatsapp', methods=['POST'])
+def receive_message():
+    """Endpoint to receive messages from Twilio."""
+    try:
+        data = request.form  # Twilio sends message data as form-encoded
+        message = {
+            'from': data.get('From'),
+            'body': data.get('Body'),
+            'timestamp': datetime.now().isoformat()
+        }
+        messages.append(message)
+        return "Message received", 200
+    except Exception as e:
+        return f"Error: {e}", 500
+
 
 @app.route('/api/messages', methods=['GET'])
 def get_messages():
