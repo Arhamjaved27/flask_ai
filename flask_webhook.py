@@ -4,7 +4,7 @@ from datetime import datetime
 app = Flask(__name__)
 
 # In-memory storage for messages
-messages = ''
+messages =  None
 new_message_flag = False  # Tracks if there are new messages
 
 @app.route('/whatsapp', methods=['POST'])
