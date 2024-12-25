@@ -4,7 +4,7 @@ from datetime import datetime
 app = Flask(__name__)
 
 # In-memory storage for messages
-messages = []
+messages = ''
 new_message_flag = False  # Tracks if there are new messages
 
 @app.route('/whatsapp', methods=['POST'])
@@ -18,7 +18,7 @@ def receive_message():
             'body': data.get('Body'),
             'timestamp': datetime.now().isoformat()
         }
-        messages.append(message)
+        messages = message
         new_message_flag = True
         return "Message received", 200
     except Exception as e:
@@ -29,7 +29,7 @@ def get_messages():
     """Endpoint to fetch all received messages."""
     global new_message_flag
     new_message_flag = False  # Reset the flag
-    return jsonify(messages[-1])
+    return jsonify(messages)
 
 @app.route('/api/has_new_messages', methods=['GET'])
 def has_new_messages():
