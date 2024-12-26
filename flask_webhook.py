@@ -3,42 +3,40 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-# Variable to store the latest message (only the last one is stored)
-latest_message = ""
-new_message_flag = False  # Flag to indicate if there's a new message
+# Variable to store the latest message body
+latest_message_body = None
+new_message_flag = False  # Tracks if there is a new message
 
 @app.route('/whatsapp', methods=['POST'])
 def receive_message():
     """Endpoint to receive messages from Twilio."""
-    global latest_message, new_message_flag
+    global latest_message_body, new_message_flag
     try:
         data = request.form
-        # Store only the latest message
-        latest_message = data.get('Body')
-
-        new_message_flag = True  # Indicate that a new message has been received
+        # Save only the message body as a string
+        latest_message_body = data.get('Body')
+        new_message_flag = True  # Set the flag to indicate a new message
         return "Message received", 200
     except Exception as e:
         return f"Error: {e}", 500
 
 @app.route('/api/messages', methods=['GET'])
-def get_messages():
-    """Endpoint to fetch the latest received message."""
+def get_latest_message():
+    """Endpoint to fetch the latest received message body."""
     global new_message_flag
-    new_message_flag = False  # Reset the new message flag
-    if latest_message:
-        return jsonify(latest_message)
+    new_message_flag = False  # Reset the flag
+    if latest_message_body:
+        return jsonify({"body": latest_message_body})
     else:
         return jsonify({"message": "No messages yet"}), 200
 
 @app.route('/api/has_new_messages', methods=['GET'])
-def has_new_messages():
+def has_new_message():
     """Check if a new message has arrived."""
     return jsonify({"new_message": new_message_flag})
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
-
 
 
 
