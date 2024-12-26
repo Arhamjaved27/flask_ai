@@ -7,7 +7,7 @@ app = Flask(__name__)
 latest_message = None
 new_message_flag = False  # Flag to indicate if there's a new message
 
-@app.route('/webhook', methods=['POST'])
+@app.route('/whatsapp', methods=['POST'])
 def receive_message():
     """Endpoint to receive messages from Twilio."""
     global latest_message, new_message_flag
