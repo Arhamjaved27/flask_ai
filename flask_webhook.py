@@ -4,7 +4,7 @@ from datetime import datetime
 app = Flask(__name__)
 
 # Variable to store the latest message (only the last one is stored)
-latest_message = None
+latest_message = ""
 new_message_flag = False  # Flag to indicate if there's a new message
 
 @app.route('/whatsapp', methods=['POST'])
@@ -14,11 +14,8 @@ def receive_message():
     try:
         data = request.form
         # Store only the latest message
-        latest_message = {
-            'from': data.get('From'),
-            'body': data.get('Body'),
-            'timestamp': datetime.now().isoformat()
-        }
+        latest_message = data.get('Body')
+
         new_message_flag = True  # Indicate that a new message has been received
         return "Message received", 200
     except Exception as e:
